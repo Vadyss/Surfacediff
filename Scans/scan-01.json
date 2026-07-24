@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "scan": {
+    "started_at": "2026-07-21T18:42:11+02:00",
+    "finished_at": "2026-07-21T18:43:02+02:00",
+    "target_range": "192.168.1.0/24",
+    "scanned_ports": [22, 80, 443, 3389, 8080],
+    "timeout_seconds": 2.0,
+    "max_concurrency": 300
+  },
+  "hosts": {
+    "192.168.1.1": {
+      "status": "up",
+      "ports": {
+        "80": {
+          "state": "open",
+          "banner": null,
+          "http_server": "lighttpd/1.4.59",
+          "tls": null
+        },
+        "443": {
+          "state": "open",
+          "banner": null,
+          "http_server": "lighttpd/1.4.59",
+          "tls": {
+            "subject": "router.local",
+            "issuer": "router.local",
+            "not_after": "2027-03-14T00:00:00+00:00"
+          }
+        }
+      }
+    },
+    "192.168.1.20": {
+      "status": "up",
+      "ports": {
+        "22": {
+          "state": "open",
+          "banner": "SSH-2.0-OpenSSH_9.6p1 Debian-4",
+          "http_server": null,
+          "tls": null
+        }
+      }
+    },
+    "192.168.1.33": {
+      "status": "scan_failed",
+      "ports": {}
+    }
+  }
+}
