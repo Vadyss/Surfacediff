@@ -4,12 +4,11 @@ import ipaddress
 def valid_target(value: str) -> str:
     try:
         ipaddress.ip_network(value, strict=False)
+        return value
     except ValueError:
         raise argparse.ArgumentTypeError("IP address is not valid.")
-
-    return value
-
-def parser_args():
+    
+def parser_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="Surfacediff",
         description="This program is for scanning open ports in network, and for what is that port used.",
