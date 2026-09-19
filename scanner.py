@@ -1,5 +1,7 @@
 import asyncio
 
+from Ports.port_list import probes
+
 class PortScanning:
     """Handles a single TCP connect + optional banner grab for one IP:port."""
     
@@ -10,6 +12,8 @@ class PortScanning:
     async def connect(self) -> dict:
         """Try to open a TCP connection and grab a banner if possible."""
         banner = None
+        
+        write_msg = probes.get(self.port, b"")
         
         try:
             temp = asyncio.open_connection(self.ip, self.port)
@@ -28,12 +32,13 @@ class PortScanning:
             if data: # Server give first message
                 banner = data.decode(errors="ignore")
             else: # We need to speek to the server
-                writer.write(b"GET / HTTP/1.0\r\n\r\n")
-                await writer.drain()
-                    
-                data = await asyncio.wait_for(reader.read(1024), timeout=3)
-                if data:    
-                    banner = data.decode(errors="ignore")
+                if write_msg:
+                    writer.write(write_msg)
+                    await writer.drain()
+                        
+                    data = await asyncio.wait_for(reader.read(1024), timeout=3)
+                    if data:    
+                        banner = data.decode(errors="ignore")
 
         except (asyncio.TimeoutError, OSError): # Connection succeeded, banner grab failed
             pass 
