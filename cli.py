@@ -1,14 +1,14 @@
 import argparse
 import ipaddress
 
-def valid_target(value: str) -> str:
+def valid_target(value: str) -> ipaddress.IPv4Network: # Validation so only network can go thru
     try:
-        ipaddress.ip_network(value, strict=False)
-        return value
+        network = ipaddress.ip_network(value, strict=False)
+        return network
     except ValueError:
         raise argparse.ArgumentTypeError("IP address is not valid.")
     
-def parser_args() -> argparse.Namespace:
+def parser_args() -> argparse.Namespace: # Defining CLI commands
     parser = argparse.ArgumentParser(
         prog="Surfacediff",
         description="This program is for scanning open ports in network, and for what is that port used.",

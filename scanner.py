@@ -1,6 +1,6 @@
 import asyncio
 
-from Ports.port_list import probes
+from Ports.port_map import probes
 
 class PortScanning:
     """Handles a single TCP connect + optional banner grab for one IP:port."""
