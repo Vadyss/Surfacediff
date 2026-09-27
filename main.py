@@ -26,8 +26,12 @@ async def main(async_scans_at_one):
         for port in ports:
             tasks.append(asyncio.create_task(scan_ports(ip, port, semaphore)))
 
+    await asyncio.gather(*tasks)
+    
 async def scan_ports(ip, port, semaphore):
     scan = PortScanning()
     
     async with semaphore:
         await scan.connect(ip, port)
+
+asyncio.run(main(300))
