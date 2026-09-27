@@ -5,18 +5,17 @@ from Ports.port_map import probes
 class PortScanning:
     """Handles a single TCP connect + optional banner grab for one IP:port."""
     
-    def __init__(self, ip: str, port: int): # Defining values thru class
-        self.ip = ip
-        self.port = port
+    def __init__(self): # Defining values thru class
+        self = self
     
-    async def connect(self) -> dict:
+    async def connect(self, ip, port) -> dict:
         """Try to open a TCP connection and grab a banner if possible."""
         banner = None
         
         write_msg = probes.get(self.port, b"")
         
         try:
-            temp = asyncio.open_connection(self.ip, self.port)
+            temp = asyncio.open_connection(ip, port)
             reader, writer = await asyncio.wait_for(temp, timeout=3)
         
         except ConnectionRefusedError: # Port is closed
